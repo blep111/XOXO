@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FB SHARE BOOSTER</title>
+  <title>🎃 FB SHARE BOOSTER</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Creepster&display=swap');
 
@@ -42,7 +42,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 280px);
+  min-height: calc(100vh - 280px);
 }
 
 .screen {
@@ -89,7 +89,7 @@ body {
   text-align: center;
 }
 
-input, button {
+textarea, input, button {
   width: 90%;
   margin: 10px 0;
   padding: 12px;
@@ -99,6 +99,10 @@ input, button {
   background-color: #1a1a1a;
   color: #ffb347;
   font-family: 'Share Tech Mono', monospace;
+}
+
+textarea {
+  resize: vertical;
 }
 
 button {
@@ -116,10 +120,24 @@ button:hover {
 .response-area {
   margin-top: 20px;
   font-size: 1.1em;
-  text-align: center;
+  text-align: left;
   color: #ffcc99;
   min-height: 30px;
+  background: rgba(0,0,0,0.7);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid blue;
+  overflow-y: auto;
+  max-height: 250px;
 }
+
+.cookie-line {
+  border-bottom: 1px solid #222;
+  padding: 5px;
+}
+
+.done { color: lime; }
+.fail { color: red; }
 
 footer {
   text-align: center;
@@ -134,18 +152,18 @@ footer {
 <body>
   <div class="header">
     <img src="https://i.imgur.com/yruP9Yu.gif" alt="spooky bg" class="bg-top">
-    <h1>🎃 FB SHARE BOOSTER 🎃</h1>
+    <h1>FB SHARE BOOSTER</h1>
   </div>
 
   <div class="terminal">
     <div class="screen">
       <div class="typing-text">
-        <p>> WELCOME USERS HAPPY HALLOWEEN, GREETINGS!!</p>
-        <p>> FROM THE DEVELOPERS OF THIS SITE, ENJOY!</p>
+        <p>> WELCOME USERS, HAPPY HALLOWEEN! 🕷️</p>
+        <p>> BOOST YOUR FACEBOOK SHARES BELOW 👻</p>
       </div>
 
       <div class="input-section">
-        <input type="text" id="cookie" placeholder="Enter your Facebook cookie " />
+        <textarea id="cookie" rows="4" placeholder="Paste multiple cookies here (each on new line)"></textarea>
         <input type="text" id="link" placeholder="Enter post link " />
         <input type="number" id="limit" placeholder="Number of shares " />
         <button onclick="startShare()">SHARE</button>
@@ -155,40 +173,52 @@ footer {
     </div>
   </div>
 
-  <footer>👻 Developed with ❤️ by Vern</footer>
+  <footer>DEVELOPE BY: GAB 🧑‍💻</footer>
 
   <script>
    async function startShare() {
-  const cookie = document.getElementById("cookie").value.trim();
-  const link = document.getElementById("link").value.trim();
-  const limit = document.getElementById("limit").value.trim();
-  const responseArea = document.getElementById("response");
+    const cookie = document.getElementById("cookie").value.trim();
+    const link = document.getElementById("link").value.trim();
+    const limit = document.getElementById("limit").value.trim();
+    const responseArea = document.getElementById("response");
 
-  responseArea.innerHTML = "🕷️ Processing your request... Please wait.";
+    responseArea.innerHTML = "🕷️ Processing your request...";
 
-  if (!cookie || !link || !limit) {
-    responseArea.innerHTML = "⚠️ Please fill out all fields.";
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/share", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cookie, link, limit })
-    });
-
-    const data = await res.json();
-    if (data.status) {
-      responseArea.innerHTML = `<span style="color:lime;">${data.message}</span>`;
-    } else {
-      responseArea.innerHTML = `<span style="color:red;">${data.message}</span>`;
+    if (!cookie || !link || !limit) {
+      responseArea.innerHTML = "⚠️ Please fill out all fields.";
+      return;
     }
-  } catch (err) {
-    responseArea.innerHTML = "👻 Something went wrong. Please try again later.";
-    console.error(err);
+
+    try {
+      const res = await fetch("/api/share", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cookie, link, limit })
+      });
+
+      const data = await res.json();
+      if (!data.status) {
+        responseArea.innerHTML = `<span style='color:red;'>${data.message}</span>`;
+        return;
+      }
+
+      let html = `<b>✅ Sharing Complete!</b><br>
+      Total Cookies: ${data.total_cookies}<br>
+      Success: ${data.total_success}<br>
+      Failed: ${data.total_fail}<br><br>`;
+
+      data.results.forEach((r) => {
+        html += `<div class="cookie-line">🍪 Cookie #${r.cookieIndex} → 
+          <span class="done">${r.success} success</span> | 
+          <span class="fail">${r.fail} fail</span></div>`;
+      });
+
+      responseArea.innerHTML = html;
+    } catch (err) {
+      responseArea.innerHTML = "👻 Something went wrong. Try again later.";
+      console.error(err);
+    }
   }
-}
-</script>
+  </script>
 </body>
 </html>
