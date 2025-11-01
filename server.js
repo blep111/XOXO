@@ -17,14 +17,10 @@ const ua_list = [
   "Mozilla/5.0 (Linux; Android 11; G91 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/106.0.5249.126 Mobile Safari/537.36[FBAN/EMA;FBLC/fr_FR;FBAV/325.0.1.4.108;]"
 ];
 
-// Extract Facebook token
 async function extractToken(cookie, ua) {
   try {
     const res = await fetch("https://business.facebook.com/business_locations", {
-      headers: {
-        "user-agent": ua,
-        "cookie": cookie
-      },
+      headers: { "user-agent": ua, cookie },
       timeout: 10000
     });
     const text = await res.text();
@@ -38,7 +34,6 @@ async function extractToken(cookie, ua) {
   }
 }
 
-// SHARE route
 app.post("/api/share", async (req, res) => {
   let { cookie, link, limit } = req.body;
   if (!cookie || !link || !limit)
@@ -55,7 +50,7 @@ app.post("/api/share", async (req, res) => {
 
   const tokens = [];
   await Promise.all(
-    cookieList.map(async (ck, i) => {
+    cookieList.map(async (ck) => {
       const ua = ua_list[Math.floor(Math.random() * ua_list.length)];
       const token = await extractToken(ck, ua);
       if (token) tokens.push({ token, cookie: ck, ua });
@@ -68,15 +63,12 @@ app.post("/api/share", async (req, res) => {
   const results = [];
   let success = 0;
   let fail = 0;
-
-  // divide total limit evenly
   const perAcc = Math.ceil(limit / tokens.length);
 
   for (let i = 0; i < tokens.length; i++) {
     const acc = tokens[i];
     let ok = 0,
       bad = 0;
-
     for (let j = 0; j < perAcc; j++) {
       try {
         const resGraph = await fetch(
@@ -85,10 +77,7 @@ app.post("/api/share", async (req, res) => {
           )}&access_token=${acc.token}`,
           {
             method: "POST",
-            headers: {
-              "user-agent": acc.ua,
-              "cookie": acc.cookie
-            }
+            headers: { "user-agent": acc.ua, cookie: acc.cookie }
           }
         );
         const body = await resGraph.text();
@@ -99,14 +88,9 @@ app.post("/api/share", async (req, res) => {
       }
       await new Promise((r) => setTimeout(r, 400));
     }
-
     success += ok;
     fail += bad;
-    results.push({
-      cookieIndex: i + 1,
-      success: ok,
-      fail: bad
-    });
+    results.push({ cookieIndex: i + 1, success: ok, fail: bad });
   }
 
   res.json({
@@ -124,5 +108,5 @@ app.get("/", (req, res) =>
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () =>
-  console.log(`🚀 Server running at http://localhost:${PORT}`)
+  console.log(`🎃 Server running at http://localhost:${PORT}`)
 );
