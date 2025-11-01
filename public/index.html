@@ -1,152 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎃 FB SHARE BOOSTER</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FB SHARE BOOSTING SITE</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Creepster&display=swap');
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: black;
-  color: #ff7518;
-  font-family: 'Share Tech Mono', monospace;
-  overflow-x: hidden;
-}
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: #ff7518;
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
+  }
 
-.header {
-  text-align: center;
-  background: black;
-  border-bottom: 3px solid blue;
-  padding-bottom: 10px;
-}
+  .header {
+    text-align: center;
+    background: black;
+    border-bottom: 3px solid blue;
+    padding-bottom: 10px;
+  }
 
-.bg-top {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-bottom: 2px solid blue;
-}
+  .bg-top {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid blue;
+  }
 
-.header h1 {
-  color: #ff7518;
-  text-shadow: 0 0 20px blue;
-  font-family: 'Creepster', cursive;
-  margin: 10px 0 0 0;
-  font-size: 2.3em;
-}
+  .header h1 {
+    color: #ff7518;
+    text-shadow: 0 0 20px blue;
+    font-family: 'Creepster', cursive;
+    margin: 10px 0 0 0;
+    font-size: 2.3em;
+  }
 
-.terminal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 280px);
-}
+  .terminal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 280px);
+  }
 
-.screen {
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid blue;
-  border-radius: 15px;
-  box-shadow: 0 0 25px #ff7518;
-  padding: 25px;
-  width: 85%;
-  max-width: 600px;
-  text-align: left;
-  color: red;
-  animation: glow 2s infinite alternate;
-}
+  .screen {
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid blue;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #ff7518;
+    padding: 25px;
+    width: 85%;
+    max-width: 700px;
+    text-align: left;
+    color: red;
+    animation: glow 2s infinite alternate;
+  }
 
-@keyframes glow {
-  from { box-shadow: 0 0 10px black; }
-  to { box-shadow: 0 0 30px black; }
-}
+  @keyframes glow {
+    from { box-shadow: 0 0 10px black; }
+    to { box-shadow: 0 0 30px black; }
+  }
 
-.typing-text p {
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid red;
-  width: 0;
-  animation: typing 4s steps(20, end) forwards, blink 0.6s infinite;
-}
+  .typing-text p {
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid red;
+    width: 0;
+    animation: typing 4s steps(20, end) forwards, blink 0.6s infinite;
+  }
 
-.typing-text p:nth-child(2) {
-  animation-delay: 4.5s;
-}
+  .typing-text p:nth-child(2) {
+    animation-delay: 4.5s;
+  }
 
-@keyframes typing {
-  to { width: 100%; }
-}
+  @keyframes typing {
+    to { width: 100%; }
+  }
 
-@keyframes blink {
-  50% { border-color: transparent; }
-}
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
 
-.input-section {
-  margin-top: 30px;
-  text-align: center;
-}
+  .input-section {
+    margin-top: 20px;
+    text-align: center;
+  }
 
-textarea, input, button {
-  width: 90%;
-  margin: 10px 0;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 1em;
-  background-color: #1a1a1a;
-  color: #ffb347;
-  font-family: 'Share Tech Mono', monospace;
-}
+  textarea, input, button {
+    width: 90%;
+    margin: 8px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #1a1a1a;
+    color: #ffb347;
+    font-family: 'Share Tech Mono', monospace;
+  }
 
-textarea {
-  resize: vertical;
-}
+  textarea { resize: vertical; min-height: 70px; }
 
-button {
-  background-color: cyan;
-  color: black;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  button {
+    background-color: cyan;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
 
-button:hover {
-  transform: scale(1.05);
-  background-color: #ffb347;
-}
+  button:hover {
+    transform: scale(1.03);
+    background-color: #ffb347;
+  }
 
-.response-area {
-  margin-top: 20px;
-  font-size: 1.1em;
-  text-align: left;
-  color: #ffcc99;
-  min-height: 30px;
-  background: rgba(0,0,0,0.7);
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid blue;
-  overflow-y: auto;
-  max-height: 250px;
-}
+  .response-area {
+    margin-top: 16px;
+    font-size: 1.05em;
+    text-align: left;
+    color: #ffcc99;
+    min-height: 40px;
+    background: rgba(0,0,0,0.65);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid blue;
+    max-height: 260px;
+    overflow-y: auto;
+  }
 
-.cookie-line {
-  border-bottom: 1px solid #222;
-  padding: 5px;
-}
+  .cookie-line {
+    border-bottom: 1px solid #222;
+    padding: 8px 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.done { color: lime; }
-.fail { color: red; }
+  .cookie-left { font-size: 0.95em; color: #ffcc99; }
+  .cookie-right { font-size: 0.95em; color: #ffcc99; }
 
-footer {
-  text-align: center;
-  padding: 10px;
-  font-size: 0.8em;
-  color: #ff7518;
-  border-top: 2px solid #ff7518;
-  background: #000;
-}
+  .ok { color: #7CFC00; font-weight: bold; }
+  .bad { color: #FF6347; font-weight: bold; }
+
+  .counter {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 1.1em;
+    color: #ffdf9b;
+  }
+
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #ff7518;
+    border-top: 2px solid #ff7518;
+    background: #000;
+  }
+
+  /* simple confetti pieces */
+  .confetti {
+    pointer-events:none;
+    position:fixed;
+    left:0; top:0; width:100%; height:100%;
+    overflow:hidden;
+    z-index:9999;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    opacity: 0.9;
+    transform: rotate(0deg);
+    will-change: transform, top;
+  }
   </style>
 </head>
 <body>
@@ -158,67 +187,172 @@ footer {
   <div class="terminal">
     <div class="screen">
       <div class="typing-text">
-        <p>> WELCOME USERS, HAPPY HALLOWEEN! 🕷️</p>
-        <p>> BOOST YOUR FACEBOOK SHARES BELOW 👻</p>
+        <p>> WELCOME USERS — HAPPY HALLOWEEN 🕷️</p>
+        <p>> PASTE MULTIPLE COOKIES & WATCH THE BOOST</p>
       </div>
 
       <div class="input-section">
-        <textarea id="cookie" rows="4" placeholder="Paste multiple cookies here (each on new line)"></textarea>
-        <input type="text" id="link" placeholder="Enter post link " />
-        <input type="number" id="limit" placeholder="Number of shares " />
-        <button onclick="startShare()">SHARE</button>
+        <textarea id="cookies" placeholder="Paste multiple cookies here (one per line)"></textarea>
+        <input type="text" id="link" placeholder="Enter post link (full URL)" />
+        <input type="number" id="limit" placeholder="Total number of shares (e.g. 20)" />
+        <button id="startBtn">SHARE</button>
       </div>
+
+      <div class="counter" id="counter">0 / 0</div>
 
       <div id="response" class="response-area"></div>
     </div>
   </div>
 
-  <footer>DEVELOPE BY: GAB 🧑‍💻</footer>
+  <footer>DEVELOPED BY: GAB 🧑‍💻</footer>
+
+  <div id="confetti" class="confetti" style="display:none;"></div>
 
   <script>
-   async function startShare() {
-    const cookie = document.getElementById("cookie").value.trim();
-    const link = document.getElementById("link").value.trim();
-    const limit = document.getElementById("limit").value.trim();
-    const responseArea = document.getElementById("response");
+    // helper: create confetti burst (JS-only, no libs)
+    function spawnConfetti() {
+      const root = document.getElementById('confetti');
+      root.innerHTML = "";
+      root.style.display = "block";
+      const colors = ['#ff7518','#ffcc00','#00ff88','#ff66cc','#66ccff'];
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const count = 60;
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.left = Math.random() * (w - 10) + 'px';
+        el.style.top = -20 - Math.random()*200 + 'px';
+        el.style.opacity = 0.9;
+        el.style.transform = `rotate(${Math.random()*360}deg)`;
+        root.appendChild(el);
 
-    responseArea.innerHTML = "🕷️ Processing your request...";
-
-    if (!cookie || !link || !limit) {
-      responseArea.innerHTML = "⚠️ Please fill out all fields.";
-      return;
+        // animate
+        const delay = Math.random() * 800;
+        const duration = 2000 + Math.random()*2000;
+        setTimeout(() => {
+          el.animate(
+            [
+              { transform: `translateY(0px) rotate(${Math.random()*360}deg)` , opacity:1 },
+              { transform: `translateY(${h + 200}px) rotate(${Math.random()*720}deg)`, opacity: 0.8 }
+            ],
+            { duration, easing: 'cubic-bezier(.2,.7,.2,1)', iterations: 1 }
+          );
+        }, delay);
+      }
+      // hide after a while
+      setTimeout(()=>{ root.style.display='none'; root.innerHTML=''; }, 4500);
     }
 
-    try {
-      const res = await fetch("/api/share", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cookie, link, limit })
-      });
+    document.getElementById('startBtn').addEventListener('click', async () => {
+      const rawCookies = document.getElementById('cookies').value.trim();
+      const link = document.getElementById('link').value.trim();
+      const limit = parseInt(document.getElementById('limit').value);
+      const responseArea = document.getElementById('response');
+      const counterEl = document.getElementById('counter');
 
-      const data = await res.json();
-      if (!data.status) {
-        responseArea.innerHTML = `<span style='color:red;'>${data.message}</span>`;
+      if (!rawCookies || !link || !limit || limit <= 0) {
+        responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ Fill all fields with valid values.</span>";
         return;
       }
 
-      let html = `<b>✅ Sharing Complete!</b><br>
-      Total Cookies: ${data.total_cookies}<br>
-      Success: ${data.total_success}<br>
-      Failed: ${data.total_fail}<br><br>`;
+      // parse cookies (one per line or comma separated)
+      const cookieList = rawCookies.split(/\r?\n|,/).map(c => c.trim()).filter(c => c.length > 10);
+      if (cookieList.length === 0) {
+        responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid cookies found.</span>";
+        return;
+      }
 
-      data.results.forEach((r) => {
-        html += `<div class="cookie-line">🍪 Cookie #${r.cookieIndex} → 
-          <span class="done">${r.success} success</span> | 
-          <span class="fail">${r.fail} fail</span></div>`;
+      // prepare UI lines
+      responseArea.innerHTML = "";
+      const lines = [];
+      cookieList.forEach((ck, idx) => {
+        const div = document.createElement('div');
+        div.className = 'cookie-line';
+        div.id = 'cookie-line-' + idx;
+        div.innerHTML = `<div class="cookie-left">🍪 Cookie #${idx+1}</div>
+                         <div class="cookie-right" id="cookie-right-${idx}">pending</div>`;
+        responseArea.appendChild(div);
+        lines.push({ el: div, rightEl: document.getElementById('cookie-right-'+idx), success:0, fail:0 });
       });
 
+      // global counters
+      let totalDone = 0;
+      const totalToDo = limit;
+      counterEl.innerText = `${totalDone} / ${totalToDo}`;
+
+      // Distribute the total shares across cookies roughly evenly
+      const base = Math.floor(limit / cookieList.length);
+      const remainder = limit % cookieList.length;
+      const perCookie = cookieList.map((_, i) => base + (i < remainder ? 1 : 0));
+
+      // For speed: run all cookie jobs in parallel (each cookie posts its allocated count sequentially)
+      const tasks = cookieList.map((cookie, idx) => runCookieJob(cookie, link, perCookie[idx], idx, lines, updateGlobal));
+
+      // wait for all
+      await Promise.all(tasks);
+
+      // finished
+      counterEl.innerText = `${totalDone} / ${totalToDo}`;
+      spawnConfetti();
+      // summary
+      let html = "<b>✅ Finished!</b><br>";
+      lines.forEach((ln, i) => {
+        html += `<div class="cookie-line"><div class="cookie-left">🍪 Cookie #${i+1}</div>
+                 <div class="cookie-right">${ln.success} success | ${ln.fail} fail</div></div>`;
+      });
       responseArea.innerHTML = html;
-    } catch (err) {
-      responseArea.innerHTML = "👻 Something went wrong. Try again later.";
-      console.error(err);
-    }
-  }
+
+      // updateGlobal callback
+      function updateGlobal(doneCount) {
+        totalDone += doneCount;
+        counterEl.innerText = `${totalDone} / ${totalToDo}`;
+      }
+
+      // function handling per-cookie sequential shares
+      async function runCookieJob(cookie, link, count, idx, lines, incrementCallback) {
+        const right = document.getElementById('cookie-right-'+idx);
+        right.innerText = `starting (${count})...`;
+        let succ = 0, fail = 0;
+        if (count <= 0) {
+          right.innerText = `0 assigned`;
+          return;
+        }
+
+        for (let i = 0; i < count; i++) {
+          try {
+            // call server endpoint for single cookie 1 share at a time to get per-attempt status
+            // but for speed we perform one request per share — server will extract token on first request each cookie,
+            // so small overhead exists. This keeps the UI responsive and accurate.
+            const resp = await fetch('/api/share-single', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ cookie, link, count: 1 })
+            });
+            const data = await resp.json();
+            if (data.status && data.success && data.success > 0) {
+              succ++;
+              right.innerHTML = `<span class="ok">✅ ${succ} success</span> • <span class="bad">${fail} fail</span>`;
+              incrementCallback(1);
+            } else {
+              fail++;
+              right.innerHTML = `<span class="ok">${succ} success</span> • <span class="bad">❌ ${fail} fail</span>`;
+              incrementCallback(1);
+            }
+          } catch (err) {
+            fail++;
+            right.innerHTML = `<span class="ok">${succ} success</span> • <span class="bad">❌ ${fail} fail</span>`;
+            incrementCallback(1);
+          }
+          // tiny pause between shares per cookie (keeps it fast but not instant)
+          await new Promise(r => setTimeout(r, 150));
+        }
+        // store results for final summary
+        lines[idx].success = succ;
+        lines[idx].fail = fail;
+      }
+    });
   </script>
 </body>
 </html>
