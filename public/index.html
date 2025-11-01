@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FB SHARE BOOSTING SITE</title>
+  <title>🎃 FB SHARE BOOSTER</title>
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Creepster&display=swap');
 
@@ -160,7 +160,6 @@
     background: #000;
   }
 
-  /* simple confetti pieces */
   .confetti {
     pointer-events:none;
     position:fixed;
@@ -188,14 +187,14 @@
     <div class="screen">
       <div class="typing-text">
         <p>> WELCOME USERS — HAPPY HALLOWEEN 🕷️</p>
-        <p>> PASTE MULTIPLE COOKIES & WATCH THE BOO-STING!</p>
+        <p>> PASTE MULTIPLE ACCESS TOKENS (ONE PER LINE) THEN SHARE 👻</p>
       </div>
 
       <div class="input-section">
-        <textarea id="cookies" placeholder="Paste multiple cookies here (one per line)"></textarea>
+        <textarea id="tokens" placeholder="Paste multiple user access tokens here (one per line)"></textarea>
         <input type="text" id="link" placeholder="Enter post link (full URL)" />
         <input type="number" id="limit" placeholder="Total number of shares (e.g. 20)" />
-        <button id="startBtn">SHARE</button>
+        <button id="startBtn">🎯 START SHARING</button>
       </div>
 
       <div class="counter" id="counter">0 / 0</div>
@@ -204,12 +203,12 @@
     </div>
   </div>
 
-  <footer>DEVELOPED BY: GAB 🧑‍💻</footer>
+  <footer>👻 Developed by Vern — use tokens you have permission to use</footer>
 
   <div id="confetti" class="confetti" style="display:none;"></div>
 
   <script>
-    // helper: create confetti burst (JS-only, no libs)
+    // confetti helper
     function spawnConfetti() {
       const root = document.getElementById('confetti');
       root.innerHTML = "";
@@ -228,7 +227,6 @@
         el.style.transform = `rotate(${Math.random()*360}deg)`;
         root.appendChild(el);
 
-        // animate
         const delay = Math.random() * 800;
         const duration = 2000 + Math.random()*2000;
         setTimeout(() => {
@@ -241,117 +239,99 @@
           );
         }, delay);
       }
-      // hide after a while
       setTimeout(()=>{ root.style.display='none'; root.innerHTML=''; }, 4500);
     }
 
     document.getElementById('startBtn').addEventListener('click', async () => {
-      const rawCookies = document.getElementById('cookies').value.trim();
+      const raw = document.getElementById('tokens').value.trim();
       const link = document.getElementById('link').value.trim();
-      const limit = parseInt(document.getElementById('limit').value);
+      const limit = parseInt(document.getElementById('limit').value, 10);
       const responseArea = document.getElementById('response');
       const counterEl = document.getElementById('counter');
 
-      if (!rawCookies || !link || !limit || limit <= 0) {
+      if (!raw || !link || !limit || limit <= 0) {
         responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ Fill all fields with valid values.</span>";
         return;
       }
 
-      // parse cookies (one per line or comma separated)
-      const cookieList = rawCookies.split(/\r?\n|,/).map(c => c.trim()).filter(c => c.length > 10);
-      if (cookieList.length === 0) {
-        responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid cookies found.</span>";
+      // parse tokens one per line or comma separated
+      const tokenList = raw.split(/\r?\n|,/).map(s => s.trim()).filter(s => s.length > 10);
+      if (tokenList.length === 0) {
+        responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid tokens found.</span>";
         return;
       }
 
       // prepare UI lines
       responseArea.innerHTML = "";
       const lines = [];
-      cookieList.forEach((ck, idx) => {
+      tokenList.forEach((t, i) => {
         const div = document.createElement('div');
         div.className = 'cookie-line';
-        div.id = 'cookie-line-' + idx;
-        div.innerHTML = `<div class="cookie-left">🍪 Cookie #${idx+1}</div>
-                         <div class="cookie-right" id="cookie-right-${idx}">pending</div>`;
+        div.id = 'line-' + i;
+        div.innerHTML = `<div class="cookie-left">🔑 Token #${i+1}</div>
+                         <div class="cookie-right" id="right-${i}">pending</div>`;
         responseArea.appendChild(div);
-        lines.push({ el: div, rightEl: document.getElementById('cookie-right-'+idx), success:0, fail:0 });
+        lines.push({ success:0, fail:0 });
       });
 
-      // global counters
+      // distribute shares across tokens evenly
+      const base = Math.floor(limit / tokenList.length);
+      let remainder = limit % tokenList.length;
+      const perToken = tokenList.map(() => base);
+      for (let i=0; i<remainder; i++) perToken[i]++;
+
       let totalDone = 0;
-      const totalToDo = limit;
-      counterEl.innerText = `${totalDone} / ${totalToDo}`;
+      counterEl.innerText = `${totalDone} / ${limit}`;
 
-      // Distribute the total shares across cookies roughly evenly
-      const base = Math.floor(limit / cookieList.length);
-      const remainder = limit % cookieList.length;
-      const perCookie = cookieList.map((_, i) => base + (i < remainder ? 1 : 0));
-
-      // For speed: run all cookie jobs in parallel (each cookie posts its allocated count sequentially)
-      const tasks = cookieList.map((cookie, idx) => runCookieJob(cookie, link, perCookie[idx], idx, lines, updateGlobal));
-
-      // wait for all
-      await Promise.all(tasks);
-
-      // finished
-      counterEl.innerText = `${totalDone} / ${totalToDo}`;
-      spawnConfetti();
-      // summary
-      let html = "<b>✅ Finished!</b><br>";
-      lines.forEach((ln, i) => {
-        html += `<div class="cookie-line"><div class="cookie-left">🍪 Cookie #${i+1}</div>
-                 <div class="cookie-right">${ln.success} success | ${ln.fail} fail</div></div>`;
-      });
-      responseArea.innerHTML = html;
-
-      // updateGlobal callback
-      function updateGlobal(doneCount) {
-        totalDone += doneCount;
-        counterEl.innerText = `${totalDone} / ${totalToDo}`;
-      }
-
-      // function handling per-cookie sequential shares
-      async function runCookieJob(cookie, link, count, idx, lines, incrementCallback) {
-        const right = document.getElementById('cookie-right-'+idx);
-        right.innerText = `starting (${count})...`;
-        let succ = 0, fail = 0;
-        if (count <= 0) {
-          right.innerText = `0 assigned`;
+      // run jobs in parallel (each token does its allocated count sequentially)
+      await Promise.all(tokenList.map((token, idx) => (async () => {
+        const allocated = perToken[idx];
+        const rightEl = document.getElementById('right-' + idx);
+        rightEl.innerText = `starting (${allocated})...`;
+        if (allocated <= 0) {
+          rightEl.innerText = `0 assigned`;
           return;
         }
 
-        for (let i = 0; i < count; i++) {
-          try {
-            // call server endpoint for single cookie 1 share at a time to get per-attempt status
-            // but for speed we perform one request per share — server will extract token on first request each cookie,
-            // so small overhead exists. This keeps the UI responsive and accurate.
-            const resp = await fetch('/api/share-single', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ cookie, link, count: 1 })
-            });
-            const data = await resp.json();
-            if (data.status && data.success && data.success > 0) {
-              succ++;
-              right.innerHTML = `<span class="ok">✅ ${succ} success</span> • <span class="bad">${fail} fail</span>`;
-              incrementCallback(1);
-            } else {
-              fail++;
-              right.innerHTML = `<span class="ok">${succ} success</span> • <span class="bad">❌ ${fail} fail</span>`;
-              incrementCallback(1);
-            }
-          } catch (err) {
-            fail++;
-            right.innerHTML = `<span class="ok">${succ} success</span> • <span class="bad">❌ ${fail} fail</span>`;
-            incrementCallback(1);
+        // Instead of batching many shares in one request, call the server endpoint to perform allocated shares sequentially.
+        // This server endpoint will perform `allocated` attempts and return success/fail counts.
+        try {
+          const resp = await fetch('/api/share-token-single', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, link, count: allocated })
+          });
+          const data = await resp.json();
+          if (data && data.status) {
+            lines[idx].success = data.success || 0;
+            lines[idx].fail = data.fail || 0;
+            rightEl.innerHTML = `<span class="ok">✅ ${lines[idx].success} success</span> • <span class="bad">❌ ${lines[idx].fail} fail</span>`;
+            totalDone += (lines[idx].success + lines[idx].fail);
+            counterEl.innerText = `${totalDone} / ${limit}`;
+          } else {
+            rightEl.innerHTML = `<span class="bad">❌ failed (server)</span>`;
+            totalDone += allocated;
+            counterEl.innerText = `${totalDone} / ${limit}`;
           }
-          // tiny pause between shares per cookie (keeps it fast but not instant)
-          await new Promise(r => setTimeout(r, 150));
+        } catch (err) {
+          console.error(err);
+          rightEl.innerHTML = `<span class="bad">❌ request error</span>`;
+          totalDone += allocated;
+          counterEl.innerText = `${totalDone} / ${limit}`;
         }
-        // store results for final summary
-        lines[idx].success = succ;
-        lines[idx].fail = fail;
-      }
+      })()));
+
+      // done
+      counterEl.innerText = `${totalDone} / ${limit}`;
+      spawnConfetti();
+
+      // final summary (keeps same style)
+      let out = "<b>✅ Finished!</b><br>";
+      lines.forEach((ln, i) => {
+        out += `<div class="cookie-line"><div class="cookie-left">🔑 Token #${i+1}</div>
+                <div class="cookie-right">${ln.success} success | ${ln.fail} fail</div></div>`;
+      });
+      responseArea.innerHTML = out;
     });
   </script>
 </body>
