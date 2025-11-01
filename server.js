@@ -1,28 +1,27 @@
 // server.js
 import express from "express";
 import fetch from "node-fetch";
-import bodyParser from "body-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
 // ESM-safe __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from /public
+// Serve static UI
 app.use(express.static(path.join(__dirname, "public")));
 
 // POST /api/share-token-single
 // Body: { token: string, link: string, count: number }
-// Uses Graph API v18.0 to post to /me/feed count times (sequentially for a given token)
+// Server uses the provided token to make `count` attempts to post `link` to /me/feed
 app.post("/api/share-token-single", async (req, res) => {
   try {
     const { token, link, count } = req.body;
     if (!token || !link || !count) {
-      return res.status(400).json({ status: false, message: "Missing token/link/count" });
+      return res.status(400).json({ status: false, message: "Missing token, link or count" });
     }
 
     const parsedCount = parseInt(count, 10);
@@ -30,52 +29,61 @@ app.post("/api/share-token-single", async (req, res) => {
       return res.status(400).json({ status: false, message: "Invalid count" });
     }
 
+    console.log(`[share] starting token (first 12 chars): ${token.slice(0,12)}..., attempts: ${parsedCount}`);
+
     let success = 0;
     let fail = 0;
+    const errors = [];
 
-    // sequentially attempt 'count' shares for this token (so Graph token usage stays consistent)
     for (let i = 0; i < parsedCount; i++) {
       try {
+        // POST form-encoded to Graph API
         const params = new URLSearchParams({
           link,
           access_token: token,
           published: "0"
         });
 
-        const response = await fetch(`https://graph.facebook.com/v18.0/me/feed?${params.toString()}`, {
-          method: "POST"
+        const r = await fetch(`https://graph.facebook.com/v18.0/me/feed`, {
+          method: "POST",
+          body: params
         });
 
-        const text = await response.text();
+        // Try parse JSON response
+        let json;
+        try { json = await r.json(); } catch (e) { json = null; }
 
-        if (text.includes('"id"')) {
+        if (json && json.id) {
           success++;
         } else {
-          // treat any non-id response as a failure for that attempt
           fail++;
+          const errText = json && json.error ? `${json.error.type || ""} ${json.error.message || ""}` : `status:${r.status}`;
+          errors.push({ attempt: i+1, err: errText });
+          console.warn(`[share] attempt ${i+1} failed for token ${token.slice(0,8)}.. =>`, errText);
         }
       } catch (err) {
-        console.error("Error during share attempt:", err && err.message ? err.message : err);
         fail++;
+        const msg = err && err.message ? err.message : String(err);
+        errors.push({ attempt: i+1, err: msg });
+        console.error("[share] network error:", msg);
       }
 
-      // short delay to avoid very aggressive burst
+      // small delay to avoid aggressive bursts - keep short for speed
       await new Promise((r) => setTimeout(r, 120));
     }
 
-    return res.json({ status: true, success, fail });
+    return res.json({ status: true, success, fail, errors });
   } catch (err) {
-    console.error("share-token-single error:", err && err.message ? err.message : err);
+    console.error("share-token-single endpoint error:", err);
     return res.status(500).json({ status: false, message: "Server error" });
   }
 });
 
-// Serve index
+// Serve UI entry
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Start
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🎃 Server running at http://localhost:${PORT}`);
