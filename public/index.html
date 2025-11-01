@@ -126,7 +126,7 @@
     padding: 10px;
     border-radius: 8px;
     border: 1px solid blue;
-    max-height: 260px;
+    max-height: 300px;
     overflow-y: auto;
   }
 
@@ -203,12 +203,11 @@
     </div>
   </div>
 
-  <footer>👻 Developed by Vern — use tokens you have permission to use</footer>
+  <footer>👻 Use tokens you own or that were explicitly granted to you</footer>
 
   <div id="confetti" class="confetti" style="display:none;"></div>
 
   <script>
-    // confetti helper
     function spawnConfetti() {
       const root = document.getElementById('confetti');
       root.innerHTML = "";
@@ -254,14 +253,12 @@
         return;
       }
 
-      // parse tokens one per line or comma separated
       const tokenList = raw.split(/\r?\n|,/).map(s => s.trim()).filter(s => s.length > 10);
       if (tokenList.length === 0) {
         responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid tokens found.</span>";
         return;
       }
 
-      // prepare UI lines
       responseArea.innerHTML = "";
       const lines = [];
       tokenList.forEach((t, i) => {
@@ -283,7 +280,7 @@
       let totalDone = 0;
       counterEl.innerText = `${totalDone} / ${limit}`;
 
-      // run jobs in parallel (each token does its allocated count sequentially)
+      // run each token's batch in parallel
       await Promise.all(tokenList.map((token, idx) => (async () => {
         const allocated = perToken[idx];
         const rightEl = document.getElementById('right-' + idx);
@@ -293,14 +290,13 @@
           return;
         }
 
-        // Instead of batching many shares in one request, call the server endpoint to perform allocated shares sequentially.
-        // This server endpoint will perform `allocated` attempts and return success/fail counts.
         try {
           const resp = await fetch('/api/share-token-single', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token, link, count: allocated })
           });
+
           const data = await resp.json();
           if (data && data.status) {
             lines[idx].success = data.success || 0;
@@ -309,23 +305,23 @@
             totalDone += (lines[idx].success + lines[idx].fail);
             counterEl.innerText = `${totalDone} / ${limit}`;
           } else {
-            rightEl.innerHTML = `<span class="bad">❌ failed (server)</span>`;
+            rightEl.innerHTML = `<span class="bad">❌ server rejected</span>`;
             totalDone += allocated;
             counterEl.innerText = `${totalDone} / ${limit}`;
           }
         } catch (err) {
-          console.error(err);
+          console.error("fetch error", err);
           rightEl.innerHTML = `<span class="bad">❌ request error</span>`;
           totalDone += allocated;
           counterEl.innerText = `${totalDone} / ${limit}`;
         }
       })()));
 
-      // done
+      // finished
       counterEl.innerText = `${totalDone} / ${limit}`;
       spawnConfetti();
 
-      // final summary (keeps same style)
+      // final summary
       let out = "<b>✅ Finished!</b><br>";
       lines.forEach((ln, i) => {
         out += `<div class="cookie-line"><div class="cookie-left">🔑 Token #${i+1}</div>
