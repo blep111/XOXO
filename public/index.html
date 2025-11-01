@@ -15,166 +15,41 @@
     font-family: 'Share Tech Mono', monospace;
     overflow-x: hidden;
   }
+  .header { text-align: center; background: black; border-bottom: 3px solid blue; padding-bottom: 10px; }
+  .bg-top { width:100%; max-height:200px; object-fit:cover; border-bottom:2px solid blue; }
+  .header h1 { color:#ff7518; text-shadow:0 0 20px blue; font-family:'Creepster', cursive; margin:10px 0 0 0; font-size:2.3em; }
 
-  .header {
-    text-align: center;
-    background: black;
-    border-bottom: 3px solid blue;
-    padding-bottom: 10px;
-  }
-
-  .bg-top {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-bottom: 2px solid blue;
-  }
-
-  .header h1 {
-    color: #ff7518;
-    text-shadow: 0 0 20px blue;
-    font-family: 'Creepster', cursive;
-    margin: 10px 0 0 0;
-    font-size: 2.3em;
-  }
-
-  .terminal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 280px);
-  }
-
+  .terminal { display:flex; justify-content:center; align-items:center; min-height:calc(100vh - 280px); }
   .screen {
-    background: rgba(0, 0, 0, 0.85);
-    border: 2px solid blue;
-    border-radius: 15px;
+    background: rgba(0,0,0,0.85);
+    border:2px solid blue;
+    border-radius:15px;
     box-shadow: 0 0 25px #ff7518;
-    padding: 25px;
-    width: 85%;
-    max-width: 700px;
-    text-align: left;
-    color: red;
-    animation: glow 2s infinite alternate;
+    padding:25px; width:85%; max-width:780px; text-align:left; color:red; animation: glow 2s infinite alternate;
   }
+  @keyframes glow { from{box-shadow:0 0 10px black;} to{box-shadow:0 0 30px black;} }
 
-  @keyframes glow {
-    from { box-shadow: 0 0 10px black; }
-    to { box-shadow: 0 0 30px black; }
-  }
+  .typing-text p { margin:0; overflow:hidden; white-space:nowrap; border-right:3px solid red; width:0; animation:typing 4s steps(20,end) forwards, blink 0.6s infinite; }
+  .typing-text p:nth-child(2){ animation-delay:4.5s; }
+  @keyframes typing { to{ width:100%; } } @keyframes blink { 50%{ border-color:transparent; } }
 
-  .typing-text p {
-    margin: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid red;
-    width: 0;
-    animation: typing 4s steps(20, end) forwards, blink 0.6s infinite;
-  }
+  .input-section { margin-top:20px; text-align:center; }
+  textarea, input, button { width:90%; margin:8px 0; padding:12px; border:none; border-radius:6px; font-size:1em; background:#1a1a1a; color:#ffb347; font-family:'Share Tech Mono', monospace; }
+  textarea{ resize:vertical; min-height:90px; }
+  button { background-color:cyan; color:black; cursor:pointer; transition:all 0.3s; font-weight:bold; }
+  button:hover { transform:scale(1.03); background-color:#ffb347; }
 
-  .typing-text p:nth-child(2) {
-    animation-delay: 4.5s;
-  }
+  .counter { margin-top:12px; text-align:center; font-size:1.1em; color:#ffdf9b; }
+  .response-area { margin-top:16px; font-size:1.05em; text-align:left; color:#ffcc99; min-height:60px; background:rgba(0,0,0,0.65); padding:10px; border-radius:8px; border:1px solid blue; max-height:300px; overflow-y:auto; }
 
-  @keyframes typing {
-    to { width: 100%; }
-  }
+  .cookie-line { border-bottom:1px solid #222; padding:8px 6px; display:flex; justify-content:space-between; align-items:center; }
+  .cookie-left { font-size:0.95em; color:#ffcc99; } .cookie-right{ font-size:0.95em; color:#ffcc99; }
+  .ok { color:#7CFC00; font-weight:bold; } .bad { color:#FF6347; font-weight:bold; }
 
-  @keyframes blink {
-    50% { border-color: transparent; }
-  }
+  footer { text-align:center; padding:10px; font-size:0.8em; color:#ff7518; border-top:2px solid #ff7518; background:#000; }
 
-  .input-section {
-    margin-top: 20px;
-    text-align: center;
-  }
-
-  textarea, input, button {
-    width: 90%;
-    margin: 8px 0;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1em;
-    background-color: #1a1a1a;
-    color: #ffb347;
-    font-family: 'Share Tech Mono', monospace;
-  }
-
-  textarea { resize: vertical; min-height: 70px; }
-
-  button {
-    background-color: cyan;
-    color: black;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-  }
-
-  button:hover {
-    transform: scale(1.03);
-    background-color: #ffb347;
-  }
-
-  .response-area {
-    margin-top: 16px;
-    font-size: 1.05em;
-    text-align: left;
-    color: #ffcc99;
-    min-height: 40px;
-    background: rgba(0,0,0,0.65);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid blue;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  .cookie-line {
-    border-bottom: 1px solid #222;
-    padding: 8px 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .cookie-left { font-size: 0.95em; color: #ffcc99; }
-  .cookie-right { font-size: 0.95em; color: #ffcc99; }
-
-  .ok { color: #7CFC00; font-weight: bold; }
-  .bad { color: #FF6347; font-weight: bold; }
-
-  .counter {
-    margin-top: 12px;
-    text-align: center;
-    font-size: 1.1em;
-    color: #ffdf9b;
-  }
-
-  footer {
-    text-align: center;
-    padding: 10px;
-    font-size: 0.8em;
-    color: #ff7518;
-    border-top: 2px solid #ff7518;
-    background: #000;
-  }
-
-  .confetti {
-    pointer-events:none;
-    position:fixed;
-    left:0; top:0; width:100%; height:100%;
-    overflow:hidden;
-    z-index:9999;
-  }
-  .confetti-piece {
-    position: absolute;
-    width: 10px;
-    height: 14px;
-    opacity: 0.9;
-    transform: rotate(0deg);
-    will-change: transform, top;
-  }
+  .confetti { pointer-events:none; position:fixed; left:0; top:0; width:100%; height:100%; overflow:hidden; z-index:9999; }
+  .confetti-piece { position:absolute; width:10px; height:14px; opacity:0.9; transform:rotate(0deg); will-change:transform, top; }
   </style>
 </head>
 <body>
@@ -187,34 +62,33 @@
     <div class="screen">
       <div class="typing-text">
         <p>> WELCOME USERS — HAPPY HALLOWEEN 🕷️</p>
-        <p>> PASTE MULTIPLE ACCESS TOKENS (ONE PER LINE) THEN SHARE 👻</p>
+        <p>> PASTE MULTIPLE ACCESS TOKENS (ONE PER LINE) & START THE BOOST 👻</p>
       </div>
 
       <div class="input-section">
-        <textarea id="tokens" placeholder="Paste multiple user access tokens here (one per line)"></textarea>
+        <textarea id="tokens" placeholder="Paste multiple access tokens here (one per line)"></textarea>
         <input type="text" id="link" placeholder="Enter post link (full URL)" />
-        <input type="number" id="limit" placeholder="Total number of shares (e.g. 20)" />
+        <input type="number" id="limit" placeholder="Total number of shares (e.g. 30)" />
+        <input type="number" id="delay" placeholder="Per-request delay (ms, default 120)" />
         <button id="startBtn">🎯 START SHARING</button>
       </div>
 
       <div class="counter" id="counter">0 / 0</div>
-
       <div id="response" class="response-area"></div>
     </div>
   </div>
 
-  <footer>👻 Use tokens you own or that were explicitly granted to you</footer>
-
+  <footer>👻 Use only tokens you are authorized to use — do not paste other people’s cookies</footer>
   <div id="confetti" class="confetti" style="display:none;"></div>
 
   <script>
+    // confetti helper
     function spawnConfetti() {
       const root = document.getElementById('confetti');
-      root.innerHTML = "";
-      root.style.display = "block";
+      root.innerHTML = '';
+      root.style.display = 'block';
       const colors = ['#ff7518','#ffcc00','#00ff88','#ff66cc','#66ccff'];
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const w = window.innerWidth, h = window.innerHeight;
       const count = 60;
       for (let i = 0; i < count; i++) {
         const el = document.createElement('div');
@@ -222,19 +96,16 @@
         el.style.background = colors[Math.floor(Math.random()*colors.length)];
         el.style.left = Math.random() * (w - 10) + 'px';
         el.style.top = -20 - Math.random()*200 + 'px';
-        el.style.opacity = 0.9;
+        el.style.opacity = 0.95;
         el.style.transform = `rotate(${Math.random()*360}deg)`;
         root.appendChild(el);
-
-        const delay = Math.random() * 800;
+        const delay = Math.random()*800;
         const duration = 2000 + Math.random()*2000;
         setTimeout(() => {
           el.animate(
-            [
-              { transform: `translateY(0px) rotate(${Math.random()*360}deg)` , opacity:1 },
-              { transform: `translateY(${h + 200}px) rotate(${Math.random()*720}deg)`, opacity: 0.8 }
-            ],
-            { duration, easing: 'cubic-bezier(.2,.7,.2,1)', iterations: 1 }
+            [{ transform: `translateY(0px) rotate(${Math.random()*360}deg)`, opacity:1 },
+             { transform: `translateY(${h + 200}px) rotate(${Math.random()*720}deg)`, opacity: 0.8 }],
+            { duration, easing: 'cubic-bezier(.2,.7,.2,1)' }
           );
         }, delay);
       }
@@ -244,22 +115,22 @@
     document.getElementById('startBtn').addEventListener('click', async () => {
       const raw = document.getElementById('tokens').value.trim();
       const link = document.getElementById('link').value.trim();
-      const limit = parseInt(document.getElementById('limit').value, 10);
+      const total = parseInt(document.getElementById('limit').value, 10);
+      const delay = parseInt(document.getElementById('delay').value, 10) || 120;
       const responseArea = document.getElementById('response');
       const counterEl = document.getElementById('counter');
 
-      if (!raw || !link || !limit || limit <= 0) {
+      if (!raw || !link || !total || total <= 0) {
         responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ Fill all fields with valid values.</span>";
         return;
       }
 
+      // parse tokens one per line (or comma)
       const tokenList = raw.split(/\r?\n|,/).map(s => s.trim()).filter(s => s.length > 10);
-      if (tokenList.length === 0) {
-        responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid tokens found.</span>";
-        return;
-      }
+      if (tokenList.length === 0) { responseArea.innerHTML = "<span style='color:#ff6666'>⚠️ No valid tokens.</span>"; return; }
 
-      responseArea.innerHTML = "";
+      // prepare UI lines
+      responseArea.innerHTML = '';
       const lines = [];
       tokenList.forEach((t, i) => {
         const div = document.createElement('div');
@@ -271,63 +142,54 @@
         lines.push({ success:0, fail:0 });
       });
 
-      // distribute shares across tokens evenly
-      const base = Math.floor(limit / tokenList.length);
-      let remainder = limit % tokenList.length;
-      const perToken = tokenList.map(() => base);
-      for (let i=0; i<remainder; i++) perToken[i]++;
-
-      let totalDone = 0;
-      counterEl.innerText = `${totalDone} / ${limit}`;
-
-      // run each token's batch in parallel
-      await Promise.all(tokenList.map((token, idx) => (async () => {
-        const allocated = perToken[idx];
-        const rightEl = document.getElementById('right-' + idx);
-        rightEl.innerText = `starting (${allocated})...`;
-        if (allocated <= 0) {
-          rightEl.innerText = `0 assigned`;
+      // trigger share-batch
+      counterEl.innerText = `0 / ${total}`;
+      try {
+        const resp = await fetch('/api/share-batch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tokens: tokenList, link, total_shares: total, perRequestDelay: delay })
+        });
+        const json = await resp.json();
+        if (!json || !json.status) {
+          // show errors & invalid info
+          const errHtml = `<div><b style="color:#ff6b6b">Failed:</b> ${json && json.message ? json.message : 'server error'}</div>
+            <pre style="color:#ffb347">${JSON.stringify(json || {}, null, 2)}</pre>`;
+          responseArea.innerHTML = errHtml;
           return;
         }
 
-        try {
-          const resp = await fetch('/api/share-token-single', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token, link, count: allocated })
-          });
+        // Update per-token lines progressively from returned result
+        let done = 0;
+        json.perTokenResults.forEach((r, i) => {
+          const right = document.getElementById('right-' + i);
+          right.innerHTML = `<span class="ok">✅ ${r.success} success</span> • <span class="bad">❌ ${r.fail} fail</span>`;
+          lines[i].success = r.success;
+          lines[i].fail = r.fail;
+          done += r.success + r.fail;
+          counterEl.innerText = `${done} / ${total}`;
+        });
 
-          const data = await resp.json();
-          if (data && data.status) {
-            lines[idx].success = data.success || 0;
-            lines[idx].fail = data.fail || 0;
-            rightEl.innerHTML = `<span class="ok">✅ ${lines[idx].success} success</span> • <span class="bad">❌ ${lines[idx].fail} fail</span>`;
-            totalDone += (lines[idx].success + lines[idx].fail);
-            counterEl.innerText = `${totalDone} / ${limit}`;
-          } else {
-            rightEl.innerHTML = `<span class="bad">❌ server rejected</span>`;
-            totalDone += allocated;
-            counterEl.innerText = `${totalDone} / ${limit}`;
+        // show invalid tokens info if any
+        if (json.invalidInfo && json.invalidInfo.length) {
+          const invalids = json.invalidInfo.filter(x => !x.ok);
+          if (invalids.length) {
+            responseArea.innerHTML += `<div style="margin-top:8px;color:#ffcc99"><b>Invalid tokens:</b><pre style="color:#ffb347">${JSON.stringify(invalids, null, 2)}</pre></div>`;
           }
-        } catch (err) {
-          console.error("fetch error", err);
-          rightEl.innerHTML = `<span class="bad">❌ request error</span>`;
-          totalDone += allocated;
-          counterEl.innerText = `${totalDone} / ${limit}`;
         }
-      })()));
 
-      // finished
-      counterEl.innerText = `${totalDone} / ${limit}`;
-      spawnConfetti();
-
-      // final summary
-      let out = "<b>✅ Finished!</b><br>";
-      lines.forEach((ln, i) => {
-        out += `<div class="cookie-line"><div class="cookie-left">🔑 Token #${i+1}</div>
-                <div class="cookie-right">${ln.success} success | ${ln.fail} fail</div></div>`;
-      });
-      responseArea.innerHTML = out;
+        // final summary & confetti
+        spawnConfetti();
+        let out = "<b>✅ Finished!</b><br>";
+        lines.forEach((ln, i) => {
+          out += `<div class="cookie-line"><div class="cookie-left">🔑 Token #${i+1}</div>
+                  <div class="cookie-right">${ln.success} success | ${ln.fail} fail</div></div>`;
+        });
+        responseArea.innerHTML = out;
+      } catch (err) {
+        console.error(err);
+        responseArea.innerHTML = `<div style="color:#ff6b6b">Request error: ${err.message || err}</div>`;
+      }
     });
   </script>
 </body>
