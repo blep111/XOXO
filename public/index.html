@@ -115,16 +115,10 @@ button:hover {
 
 .response-area {
   margin-top: 20px;
-  font-size: 1em;
-  text-align: left;
+  font-size: 1.1em;
+  text-align: center;
   color: #ffcc99;
-  background-color: #050505;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 10px;
-  height: 180px;
-  overflow-y: auto;
-  white-space: pre-line;
+  min-height: 30px;
 }
 
 footer {
@@ -140,7 +134,7 @@ footer {
 <body>
   <div class="header">
     <img src="https://i.imgur.com/yruP9Yu.gif" alt="spooky bg" class="bg-top">
-    <h1>🎃 FB SHARE BOOSTER</h1>
+    <h1>🎃 FB SHARE BOOSTER 🎃</h1>
   </div>
 
   <div class="terminal">
@@ -151,35 +145,33 @@ footer {
       </div>
 
       <div class="input-section">
-        <input type="text" id="cookie" placeholder="Enter your Facebook cookie" />
-        <input type="text" id="link" placeholder="Enter post link" />
-        <input type="number" id="limit" placeholder="Number of shares" />
-        <button onclick="startShare()">💀 SHARE NOW</button>
+        <input type="text" id="cookie" placeholder="Enter your Facebook cookie " />
+        <input type="text" id="link" placeholder="Enter post link " />
+        <input type="number" id="limit" placeholder="Number of shares " />
+        <button onclick="startShare()">SHARE</button>
       </div>
 
       <div id="response" class="response-area"></div>
     </div>
   </div>
 
-  <footer>© 2025 FB Share Booster | Built for educational use only 🕸️</footer>
+  <footer>👻 Developed with ❤️ by Vern</footer>
 
   <script>
-async function startShare() {
+   async function startShare() {
   const cookie = document.getElementById("cookie").value.trim();
   const link = document.getElementById("link").value.trim();
   const limit = document.getElementById("limit").value.trim();
   const responseArea = document.getElementById("response");
 
-  responseArea.innerHTML = "🕷️ Starting process...\n";
+  responseArea.innerHTML = "🕷️ Processing your request... Please wait.";
 
   if (!cookie || !link || !limit) {
-    responseArea.innerHTML += "⚠️ Please fill out all fields.";
+    responseArea.innerHTML = "⚠️ Please fill out all fields.";
     return;
   }
 
   try {
-    responseArea.innerHTML += "👻 Sending request to server...\n";
-
     const res = await fetch("/api/share", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -187,17 +179,16 @@ async function startShare() {
     });
 
     const data = await res.json();
-
     if (data.status) {
-      responseArea.innerHTML += `✅ ${data.message}\n`;
+      responseArea.innerHTML = `<span style="color:lime;">${data.message}</span>`;
     } else {
-      responseArea.innerHTML += `❌ ${data.message}\n`;
+      responseArea.innerHTML = `<span style="color:red;">${data.message}</span>`;
     }
   } catch (err) {
-    responseArea.innerHTML += "💀 Something went wrong. Please try again.\n";
+    responseArea.innerHTML = "👻 Something went wrong. Please try again later.";
     console.error(err);
   }
 }
-  </script>
+</script>
 </body>
 </html>
