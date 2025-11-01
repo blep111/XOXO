@@ -1,5 +1,5 @@
 {
-  "name": "fb-share-booster-safe",
+  "name": "fb-share-booster-safe-fast",
   "version": "1.0.0",
   "type": "module",
   "scripts": { "start": "node server.js" },
